@@ -1,5 +1,4 @@
 using UnityEngine;
-using Lean.Touch;
 
 public class DioramaCard : MonoBehaviour
 {
@@ -12,6 +11,9 @@ public class DioramaCard : MonoBehaviour
     private Vector3 targetRotation;
     private Vector3 targetPosition;
     public float moveTime = 1f;
+
+    public bool moveStarted = false;
+    public bool moveFinished = false;
 
     private void Start()
     {
@@ -27,6 +29,7 @@ public class DioramaCard : MonoBehaviour
 
     public void MoveToTarget()
     {
+        moveStarted = true;
         MoveToMiddle();
     }
 
@@ -44,6 +47,7 @@ public class DioramaCard : MonoBehaviour
     {
         // Use LeanTween to smoothly move to the target position and rotation
         LeanTween.rotate(gameObject, targetRotation, moveTime).setEase(LeanTweenType.easeInOutQuad);
-        LeanTween.move(gameObject, targetPosition, moveTime).setEase(LeanTweenType.easeInOutQuad);
+        LeanTween.move(gameObject, targetPosition, moveTime).setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete(() => moveFinished = true);
     }
 }
