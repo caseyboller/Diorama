@@ -15,6 +15,8 @@ public class DioramaCard : MonoBehaviour
     public bool moveStarted = false;
     public bool moveFinished = false;
 
+    public CardCompletionManager completionManager;
+
     private void Start()
     {
         targetPosition = transform.position;
@@ -29,6 +31,9 @@ public class DioramaCard : MonoBehaviour
 
     public void MoveToTarget()
     {
+        if (moveStarted)
+            return;
+
         moveStarted = true;
         MoveToMiddle();
     }
@@ -48,6 +53,6 @@ public class DioramaCard : MonoBehaviour
         // Use LeanTween to smoothly move to the target position and rotation
         LeanTween.rotate(gameObject, targetRotation, moveTime).setEase(LeanTweenType.easeInOutQuad);
         LeanTween.move(gameObject, targetPosition, moveTime).setEase(LeanTweenType.easeInOutQuad)
-            .setOnComplete(() => moveFinished = true);
+            .setOnComplete(() => { moveFinished = true; completionManager.CompleteCard(this); });
     }
 }

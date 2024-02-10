@@ -1,0 +1,5 @@
+E:/UnityProjects/Diorama/.utmp/RelWithDebInfo/21vh3l36/arm64-v8a/CMakeFiles/edit_cache.dir
+E:/UnityProjects/Diorama/.utmp/RelWithDebInfo/21vh3l36/arm64-v8a/CMakeFiles/rebuild_cache.dir
+E:/UnityProjects/Diorama/.utmp/RelWithDebInfo/21vh3l36/arm64-v8a/FramePacing/CMakeFiles/swappywrapper.dir
+E:/UnityProjects/Diorama/.utmp/RelWithDebInfo/21vh3l36/arm64-v8a/FramePacing/CMakeFiles/edit_cache.dir
+E:/UnityProjects/Diorama/.utmp/RelWithDebInfo/21vh3l36/arm64-v8a/FramePacing/CMakeFiles/rebuild_cache.dir

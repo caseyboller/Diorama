@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AdaptivePerformance;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.InputSystem.HID;
@@ -16,6 +17,20 @@ public class InputManager : MonoBehaviour
     private InputActionReference primaryTap;    
     [SerializeField]
     private InputActionReference primaryTouchPoint;
+    [SerializeField]
+    private InputActionReference dragAction;
+
+
+    // Rotation
+    [SerializeField]
+    private Transform cameraPivot;
+    public float rotationSpeed = 1f;
+    public float rotationFactor = 1f;
+    private Vector2 lastTouchPosition;
+    private Vector3 targetRotation;
+
+    // Zoom
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +45,7 @@ public class InputManager : MonoBehaviour
         EnhancedTouchSupport.Enable();
     }
 
+    // Card touches
     private void Tap(InputAction.CallbackContext context)
     {
         Debug.Log("Tap!");
@@ -45,16 +61,46 @@ public class InputManager : MonoBehaviour
                     card.MoveToTarget();
             }
         }
-        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 100, true);
+        //Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 100, true);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Rotation
         if (Touch.activeFingers.Count == 1)
         {
-            Touch activeTouch = Touch.activeFingers[0].currentTouch;
-            Debug.Log($"Phase: {activeTouch.phase} | Position: {activeTouch.startScreenPosition}");
+            Vector2 currentTouchPosition = primaryTouchPoint.action.ReadValue<Vector2>();
+
+            if (lastTouchPosition != Vector2.zero)
+            {
+                float deltaX = currentTouchPosition.x - lastTouchPosition.x;
+                float deltaY = currentTouchPosition.y - lastTouchPosition.y;
+
+                Debug.Log(deltaX);
+
+
+                targetRotation.x = Mathf.Clamp(targetRotation.x + deltaX * rotationFactor, -160, 160);
+                targetRotation.y = Mathf.Clamp(targetRotation.y - deltaY * rotationFactor, -10, 40);              
+
+            }
+
+            lastTouchPosition = currentTouchPosition;
         }
+        else
+        {
+            lastTouchPosition = Vector2.zero;
+        }
+
+        var rotation = Quaternion.Lerp(cameraPivot.rotation, Quaternion.Euler(targetRotation.y, targetRotation.x, 0), Time.deltaTime * rotationSpeed).eulerAngles;
+        rotation.z = 0f;
+        cameraPivot.rotation = Quaternion.Euler(rotation);
+
+        // Zoom
+        if (Touch.activeFingers.Count == 2)
+        {
+
+        }
+
     }
 }
