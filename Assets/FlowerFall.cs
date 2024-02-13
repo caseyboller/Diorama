@@ -13,7 +13,7 @@ public class FallingSprites : MonoBehaviour
 
     private List<GameObject> spriteInstances = new List<GameObject>();
 
-    void Start()
+    void OnEnable()
     {
         // Instantiate sprites
         // Generate a random number of points
