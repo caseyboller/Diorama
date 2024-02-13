@@ -5,19 +5,28 @@ using UnityEngine.SceneManagement;
 
 public class SceneTransitioner : MonoBehaviour
 {
+    public Animator animator;
+    public float transitionTime;
 
     public void ToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        StartCoroutine(TransitionToLevel("MainMenu"));
     }    
     
     public void ToSakura()
     {
-        SceneManager.LoadScene("Sakura");
+        StartCoroutine(TransitionToLevel("Sakura"));
     }
 
     public void ToTorii()
     {
-        SceneManager.LoadScene("Torii");
+        StartCoroutine(TransitionToLevel("Torii"));
+    }
+
+    IEnumerator TransitionToLevel(string level)
+    {
+        animator.SetTrigger("Start");
+        yield return new WaitForSeconds(transitionTime);
+        SceneManager.LoadScene(level);
     }
 }
