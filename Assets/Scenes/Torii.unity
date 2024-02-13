@@ -1058,7 +1058,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   offset: 0
-  amplitude: 0.02
+  amplitude: 0.1
   card: {fileID: 732565007}
 --- !u!1 &963194225
 GameObject:
